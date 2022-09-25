@@ -12,11 +12,18 @@
   text-align: center;
 }
 
+.container-fluid {
+  max-width: 80vw;
+}
+
 @media only screen and (max-width: 600px) {
   #cluster-map {
     height: 30vh;
   }
   #map {
     height: 20vh;
+  }
+  .container-fluid {
+    max-width: 90vw;
   }
 }

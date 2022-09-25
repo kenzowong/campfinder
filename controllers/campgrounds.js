@@ -25,7 +25,7 @@ module.exports.createCampground = async (req, res, next) => {
     campground.author = req.user._id;
     await campground.save();
     console.log(campground);
-    req.flash('success', 'successfully made new campground');
+    req.flash('success', 'Successfully made new campground!');
     res.redirect(`/campgrounds/${campground._id}`);
 }
 
@@ -35,7 +35,7 @@ module.exports.showCampground = async (req, res, next) => {
             { path: 'reviews', populate: { path: 'author' } })
         .populate('author');
     if (!campground) {
-        req.flash('error', 'campground not found!');
+        req.flash('error', 'Campground not found');
         return res.redirect('/campgrounds');
     }
     res.render('campgrounds/show', { campground });
@@ -45,9 +45,8 @@ module.exports.renderEditForm = async (req, res, next) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
     if (!campground) {
-        req.flash('error', 'campground not found!');
+        req.flash('error', 'Campground not found');
         return res.redirect('/campgrounds');
-        // is return res.redirect needed? as colt did
     }
     res.render('campgrounds/edit', { campground });
 }
@@ -64,13 +63,13 @@ module.exports.updateCampground = async (req, res, next) => {
         await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
     }
     await campground.save();
-    req.flash('success', 'successfully updated campground');
+    req.flash('success', 'Successfully updated campground!');
     res.redirect(`/campgrounds/${campground._id}`);
 }
 
 module.exports.deleteCampground = async (req, res, next) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
-    req.flash('success', 'deleted campground!');
+    req.flash('success', 'Deleted campground!');
     res.redirect('/campgrounds');
 }
